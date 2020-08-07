@@ -2,24 +2,21 @@ import React, {Component} from 'react';
 
 class Board extends Component {
 
-    state = {
-        winner: '',
-        playerCharacter: '',
-        computerCharacter: ''
-    }
-
-    componentDidMount() {
-       //
-    }
-
     render() {
-        return (
-            <div id="board">
-                Winner: <b>{this.state.winner}</b> <br />
-                Player: <b>{this.state.playerCharacter}</b> <br />
-                Computer: <b>{this.state.computerCharacter}</b> <br />
-            </div>
-        );
+        if (this.props.status === 'result') {
+            return (
+                <div id="board">
+                    Winner: <b>{this.props.winner}</b> <br/>
+                    Player: <b>{this.props.playerCharacter}</b> <br/>
+                    Computer: <b>{this.props.computerCharacter}</b> <br/>
+                </div>
+            );
+        } else {
+            return (
+                <div id="board">
+                    {this.props.status}
+                </div>);
+        }
     }
 }
 

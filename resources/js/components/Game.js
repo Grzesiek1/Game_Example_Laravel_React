@@ -1,37 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {Component} from 'react';
+import axios from "axios";
 import Board from "./Board";
 
-function Games() {
-    return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Game - Rock paper scissors lizard spock</div>
+class Game extends Component {
 
-                        <div className="card-body">
-                            <p>Select action: </p>
+    state = {
+        winner: '',
+        playerCharacter: '',
+        computerCharacter: '',
+        status: ' '
+    }
 
-                            <button name="character" value="Lizard">Lizard</button>
-                            <button name="character" value="Paper">Paper</button>
-                            <button name="character" value="Rock">Rock</button>
-                            <button name="character" value="Spock">Spock</button>
-                            <button name="character" value="Scissors">Scissors</button>
-                        </div>
+    onClick(event) {
+        let {value} = event.target;
+        this.setState({status: 'loading...'});
 
-                        <div>
-                            <Board />
-                        </div>
-                    </div>
+        axios({
+            method: `post`,
+            url: `./api/game`,
+            data: {character: value}
+        })
+            .then(response => {
+                this.setState(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+
+    render() {
+        return (
+            <>
+                <div className="card-body">
+                    <p>Select action: </p>
+                    <button onClick={this.onClick.bind(this)} value="1">Rock</button>
+                    <button onClick={this.onClick.bind(this)} value="2">Paper</button>
+                    <button onClick={this.onClick.bind(this)} value="3">Scissors</button>
+                    <button onClick={this.onClick.bind(this)} value="4">Lizard</button>
+                    <button onClick={this.onClick.bind(this)} value="5">Spock</button>
                 </div>
-            </div>
-        </div>
-    );
+
+                <Board {...this.state} />
+            </>
+        );
+    }
 }
 
-export default Games;
-
-if (document.getElementById('root')) {
-    ReactDOM.render(<Games/>, document.getElementById('root'));
-}
+export default Game;
