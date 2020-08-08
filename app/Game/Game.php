@@ -31,7 +31,7 @@ class Game extends AbstractGame implements GameInterface
     /**
      * Set character computer
      */
-    function computerRandCharacter(): void
+    private function computerRandCharacter(): void
     {
         $this->computerCharacter = rand(1, 4);
     }
@@ -39,7 +39,7 @@ class Game extends AbstractGame implements GameInterface
     /**
      * Run main engine game
      */
-    function run(): void
+    private function run(): void
     {
         $this->computerRandCharacter();
         $playerWinner = false;
